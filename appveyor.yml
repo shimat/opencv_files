@@ -4,7 +4,7 @@ image: Ubuntu1804
 
 init:
   - sh: pwd
-  - sh: curl -sflL 'https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-ssh.sh' | bash -e -
+  #- sh: curl -sflL 'https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-ssh.sh' | bash -e -
   - ps: |
     Write-Host "APPVEYOR = "$env:APPVEYOR
     Write-Host "CI = "$env:CI
