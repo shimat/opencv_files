@@ -99,6 +99,7 @@ build_script:
       -D OPENCV_ENABLE_NONFREE=ON \
       -D OPENCV_EXTRA_MODULES_PATH=../../opencv_contrib/modules \
       -D BUILD_SHARED_LIBS=OFF \
+      ..
   - sh: make -j4
   - sh: make install
 
