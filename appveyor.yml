@@ -3,12 +3,9 @@ version: 1.0.{build}
 image: Ubuntu1804
 
 init:
-- ps: |
-    $version = $env:APPVEYOR_BUILD_VERSION.Split('-')[0]
-    $date = Get-Date -Format "yyyyMMdd"
-    Update-AppveyorBuild -Version "$version.$date-beta-$env:APPVEYOR_BUILD_NUMBER"
-    Write-Host $env:APPVEYOR_BUILD_VERSION
-    iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+  - sh: pwd
+  - sh: curl -sflL 'https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-ssh.sh' | bash -e -
+  - ps: |
     Write-Host "APPVEYOR = "$env:APPVEYOR
     Write-Host "CI = "$env:CI
     Write-Host "APPVEYOR_API_URL = "$env:APPVEYOR_API_URL
@@ -49,9 +46,13 @@ init:
 skip_branch_with_pr: true
 
 before_build:
+  - sh: pwd
+  - sh: cd
   - git submodule update --init --recursive
 
 install:
+  - sh: pwd
+  - sh: sudo apt update
   - sh: sudo apt -y remove x264 libx264-dev
   - sh: sudo apt -y install build-essential checkinstall cmake pkg-config yasm
   - sh: sudo apt -y install git gfortran
