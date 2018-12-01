@@ -45,7 +45,7 @@ skip_branch_with_pr: true
 
 before_build:
   - sh: pwd
-  - sh: cd
+  - sh: cd $APPVEYOR_BUILD_FOLDER
   - git submodule update --init --recursive
 
 install:
@@ -64,7 +64,7 @@ install:
   - sh: sudo apt -y install libxine2-dev libv4l-dev
   - sh: cd /usr/include/linux
   - sh: sudo ln -s -f ../libv4l1-videodev.h videodev.h
-  - sh: cd ~/
+  - sh: cd $APPVEYOR_BUILD_FOLDER
   - sh: sudo apt -y install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev
   - sh: sudo apt -y install libgtk2.0-dev libtbb-dev qt5-default
   - sh: sudo apt -y install libatlas-base-dev
