@@ -1,6 +1,7 @@
 version: 1.0.{build}
 
-image: Ubuntu1804
+image: 
+  - Ubuntu1804
 
 init:
 - ps: |
