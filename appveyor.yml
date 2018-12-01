@@ -3,9 +3,7 @@ version: 1.0.{build}
 image: Ubuntu1804
 
 init:
-  - sh: pwd
-  #- sh: curl -sflL 'https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-ssh.sh' | bash -e -
-  - ps: |
+- ps: |
     Write-Host "APPVEYOR = "$env:APPVEYOR
     Write-Host "CI = "$env:CI
     Write-Host "APPVEYOR_API_URL = "$env:APPVEYOR_API_URL
