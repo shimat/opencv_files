@@ -84,4 +84,7 @@ build_script:
   - sh: make -j4
   - sh: make install
 
-artifacts: ${APPVEYOR_BUILD_FOLDER}/build/
+artifacts: 
+  - path: ${APPVEYOR_BUILD_FOLDER}/build/
+    name: OpenCV
+    type: zip
