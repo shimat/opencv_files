@@ -80,8 +80,8 @@ build_script:
   - sh: cd ${APPVEYOR_BUILD_FOLDER}/opencv
   - sh: mkdir build
   - sh: cd build
-  - sh: cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=~/build -D INSTALL_C_EXAMPLES=ON -D INSTALL_PYTHON_EXAMPLES=OFF -D BUILD_DOCS=OFF -D BUILD_EXAMPLES=OFF -D BUILD_TESTS=OFF -D BUILD_PERF_TESTS=OFF -D BUILD_opencv_apps=OFF -D BUILD_opencv_datasets=OFF -D BUILD_opencv_java_bindings_generator=OFF -D BUILD_opencv_python_bindings_generator=OFF -D BUILD_opencv_ts=OFF -D WITH_TBB=ON -D WITH_V4L=ON -D WITH_QT=OFF -D WITH_OPENGL=ON -D OPENCV_ENABLE_NONFREE=ON -D OPENCV_EXTRA_MODULES_PATH=../../opencv_contrib/modules -D BUILD_SHARED_LIBS=OFF ..
+  - sh: cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=${APPVEYOR_BUILD_FOLDER}/build -D INSTALL_C_EXAMPLES=ON -D INSTALL_PYTHON_EXAMPLES=OFF -D BUILD_DOCS=OFF -D BUILD_EXAMPLES=OFF -D BUILD_TESTS=OFF -D BUILD_PERF_TESTS=OFF -D BUILD_opencv_apps=OFF -D BUILD_opencv_datasets=OFF -D BUILD_opencv_java_bindings_generator=OFF -D BUILD_opencv_python_bindings_generator=OFF -D BUILD_opencv_ts=OFF -D WITH_TBB=ON -D WITH_V4L=ON -D WITH_QT=OFF -D WITH_OPENGL=ON -D OPENCV_ENABLE_NONFREE=ON -D OPENCV_EXTRA_MODULES_PATH=../../opencv_contrib/modules -D BUILD_SHARED_LIBS=OFF ..
   - sh: make -j4
   - sh: make install
 
-artifacts: ${APPVEYOR_BUILD_FOLDER}/opencv/build/
+artifacts: ${APPVEYOR_BUILD_FOLDER}/build/
