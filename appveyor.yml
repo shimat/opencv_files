@@ -75,6 +75,7 @@ install:
   - sh: sudo apt -y install libavresample-dev
   - sh: sudo apt -y install x264 v4l-utils
   - sh: sudo apt -y install libwebp-dev
+  - sh: sudo apt -y install tesseract-ocr libtesseract-dev libleptonica-dev
 
 build_script:
   - sh: cd ${APPVEYOR_BUILD_FOLDER}/opencv
@@ -84,8 +85,11 @@ build_script:
   - sh: make -j4
   - sh: make install
   - sh: cd ${APPVEYOR_BUILD_FOLDER}
+  - sh: tar czf OpenCV_Ubuntu1804.tgz build
 
 artifacts: 
   - path: build/
     name: OpenCV_Ubuntu1804
     type: zip
+  - path: OpenCV_Ubuntu1804.tgz
+    name: OpenCV_Ubuntu1804_TGZ
