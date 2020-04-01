@@ -92,7 +92,7 @@ build_script:
           -D OPENCV_EXTRA_MODULES_PATH=../opencv_contrib/modules `
           -D BUILD_SHARED_LIBS=OFF ../opencv
     ls
-    msbuild INSTALL.vcxproj /t:build /p:configuration=$env:CONFIGURATION /p:platform=$env:PLATFORM -maxcpucount
+    msbuild INSTALL.vcxproj /t:build /p:configuration=Release /p:platform=$env:PLATFORM -maxcpucount
     cd ..
 
 artifacts: 
