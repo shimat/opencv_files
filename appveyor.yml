@@ -46,7 +46,7 @@ skip_branch_with_pr: true
 
 platform:
   - x64
-  - x86
+#  - x86
 
 before_build:
   - git submodule update --init --recursive
@@ -88,7 +88,6 @@ build_script:
           -D BUILD_opencv_python_tests=OFF `
           -D BUILD_opencv_ts=OFF `
           -D BUILD_opencv_world=OFF `
-          -D WITH_TBB=ON `
           -D WITH_MSMF=ON `
           -D WITH_MSMF_DXVA=ON `
           -D WITH_QT=OFF `
@@ -101,9 +100,13 @@ build_script:
           -D BUILD_SHARED_LIBS=OFF ../opencv
     ls
     msbuild INSTALL.vcxproj /t:build /p:configuration=Release /p:platform=$platform -maxcpucount
+    ls
     cd ..
+    pwd
 
-artifacts: 
+artifacts:   
+  - path: build_x64
+  - path: build_x86
   - path: build_x64/install
     name: artifacts_x64
   - path: build_x86/install
