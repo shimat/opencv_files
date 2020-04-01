@@ -45,22 +45,25 @@ init:
 skip_branch_with_pr: true
 
 platform:
-  - x86
   - x64
+#  - x86
 
 before_build:
   - git submodule update --init --recursive
 
 install:
   - ps: |
-      #vcpkg install tesseract:x64-windows-static tesseract:x86-windows-static
+      Install-WindowsFeature Server-Media-Foundation
+      vcpkg install tesseract:x64-windows-static
       vcpkg integrate install
 
 build_script:
 - ps: |
     mkdir build
     cd build
-    cmake -D CMAKE_BUILD_TYPE=RELEASE `
+    cmake -G "Visual Studio 16 2019" `
+          -A x64 `
+          -D CMAKE_BUILD_TYPE=Release `
           -D CMAKE_INSTALL_PREFIX=${APPVEYOR_BUILD_FOLDER}/build `
           -D INSTALL_C_EXAMPLES=ON `
           -D INSTALL_PYTHON_EXAMPLES=OFF `
@@ -68,19 +71,28 @@ build_script:
           -D BUILD_EXAMPLES=OFF `
           -D BUILD_TESTS=OFF `
           -D BUILD_PERF_TESTS=OFF `
+          -D BUILD_JAVA=OFF `
           -D BUILD_opencv_apps=OFF `
+          -D BUILD_opencv_gapi=OFF `
           -D BUILD_opencv_datasets=OFF `
           -D BUILD_opencv_java_bindings_generator=OFF `
           -D BUILD_opencv_python_bindings_generator=OFF `
+          -D BUILD_opencv_python_tests=OFF `
           -D BUILD_opencv_ts=OFF `
+          -D BUILD_opencv_world=OFF `
           -D WITH_TBB=ON `
-          -D WITH_V4L=ON `
+          -D WITH_MSMF=ON `
+          -D WITH_MSMF_DXVA=ON `
           -D WITH_QT=OFF `
-          -D WITH_OPENGL=ON `
+          -D WITH_TESSERACT=ON `
+          -D Tesseract_INCLUDE_DIR="C:/Tools/vcpkg/installed/x64-windows-static/include/tesseract" `
+          -D Tesseract_LIBRARY="C:/Tools/vcpkg/installed/x64-windows-static/lib/tesseract41.lib" `
+          -D Lept_LIBRARY="C:/Tools/vcpkg/installed/x64-windows-static/lib/leptonica-1.78.0.lib" `
           -D OPENCV_ENABLE_NONFREE=ON `
           -D OPENCV_EXTRA_MODULES_PATH=../opencv_contrib/modules `
           -D BUILD_SHARED_LIBS=OFF ../opencv
     ls
+    msbuild OpenCV.sln /t:build /p:configuration=$env:CONFIGURATION /p:platform=x64 -maxcpucount
     cd ..
 
 artifacts: 
