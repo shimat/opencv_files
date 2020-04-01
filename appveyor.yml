@@ -54,7 +54,7 @@ before_build:
 install:
   - ps: |
       Install-WindowsFeature Server-Media-Foundation
-      vcpkg install tesseract:x64-windows-static
+      vcpkg install tesseract:${env:PLATFORM}-windows-static
       vcpkg integrate install
 
 build_script:
@@ -62,7 +62,7 @@ build_script:
     mkdir build
     cd build
     cmake -G "Visual Studio 16 2019" `
-          -A x64 `
+          -A $env:PLATFORM `
           -D CMAKE_BUILD_TYPE=Release `
           -D CMAKE_INSTALL_PREFIX=${APPVEYOR_BUILD_FOLDER}/build `
           -D INSTALL_C_EXAMPLES=ON `
@@ -92,7 +92,7 @@ build_script:
           -D OPENCV_EXTRA_MODULES_PATH=../opencv_contrib/modules `
           -D BUILD_SHARED_LIBS=OFF ../opencv
     ls
-    msbuild OpenCV.sln /t:build /p:configuration=$env:CONFIGURATION /p:platform=x64 -maxcpucount
+    msbuild INSTALL.vcxproj /t:build /p:configuration=$env:CONFIGURATION /p:platform=$env:PLATFORM -maxcpucount
     cd ..
 
 artifacts: 
