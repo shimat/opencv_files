@@ -59,7 +59,8 @@ install:
 
 build_script:
   - ps: |
-      . "build_windows.ps1"
+      ls
+      . ".\build_windows.ps1"
       BuildForWindows $env:PLATFORM "C:\Tools\vcpkg" $TRUE
 
 artifacts:   
