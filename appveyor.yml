@@ -57,7 +57,7 @@ install:
       vcpkg integrate install
 
 build_script:
-  - ps: |
+- ps: |
     mkdir build
     cd build
     cmake -D CMAKE_BUILD_TYPE=RELEASE `
