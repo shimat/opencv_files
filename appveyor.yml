@@ -46,7 +46,7 @@ skip_branch_with_pr: true
 
 platform:
   - x64
-#  - x86
+  - x86
 
 before_build:
   - git submodule update --init --recursive
@@ -59,12 +59,20 @@ install:
 
 build_script:
 - ps: |
-    mkdir build
-    cd build
+    $buildDirectory = "build_${env:PLATFORM}"
+    mkdir $buildDirectory
+    cd $buildDirectory
+
+    if ($env:PLATFORM -eq "x64") {
+        $platform = "x64"
+    } else {
+        $platform = "Win32"
+    }
+
     cmake -G "Visual Studio 16 2019" `
-          -A $env:PLATFORM `
+          -A $platform `
           -D CMAKE_BUILD_TYPE=Release `
-          -D CMAKE_INSTALL_PREFIX=${APPVEYOR_BUILD_FOLDER}/build `
+          -D CMAKE_INSTALL_PREFIX=${APPVEYOR_BUILD_FOLDER}/${buildDirectory}/install `
           -D INSTALL_C_EXAMPLES=ON `
           -D INSTALL_PYTHON_EXAMPLES=OFF `
           -D BUILD_DOCS=OFF `
@@ -85,15 +93,18 @@ build_script:
           -D WITH_MSMF_DXVA=ON `
           -D WITH_QT=OFF `
           -D WITH_TESSERACT=ON `
-          -D Tesseract_INCLUDE_DIR="C:/Tools/vcpkg/installed/x64-windows-static/include/tesseract" `
-          -D Tesseract_LIBRARY="C:/Tools/vcpkg/installed/x64-windows-static/lib/tesseract41.lib" `
-          -D Lept_LIBRARY="C:/Tools/vcpkg/installed/x64-windows-static/lib/leptonica-1.78.0.lib" `
+          -D Tesseract_INCLUDE_DIR="C:/Tools/vcpkg/installed/${env:PLATFORM}-windows-static/include/tesseract" `
+          -D Tesseract_LIBRARY="C:/Tools/vcpkg/installed/${env:PLATFORM}-windows-static/lib/tesseract41.lib" `
+          -D Lept_LIBRARY="C:/Tools/vcpkg/installed/${env:PLATFORM}-windows-static/lib/leptonica-1.78.0.lib" `
           -D OPENCV_ENABLE_NONFREE=ON `
           -D OPENCV_EXTRA_MODULES_PATH=../opencv_contrib/modules `
           -D BUILD_SHARED_LIBS=OFF ../opencv
     ls
-    msbuild INSTALL.vcxproj /t:build /p:configuration=Release /p:platform=$env:PLATFORM -maxcpucount
+    msbuild INSTALL.vcxproj /t:build /p:configuration=Release /p:platform=$platform -maxcpucount
     cd ..
 
 artifacts: 
-  - path: build
+  - path: build_x64/install
+    name: artifacts_x64
+  - path: build_x86/install
+    name: artifacts_x86
