@@ -67,6 +67,6 @@ build_script:
 
 artifacts:   
   - path: build_x64/install
-    name: artifacts_x64
+    name: artifacts_win_x64
   - path: build_x86/install
-    name: artifacts_x86
+    name: artifacts_win_x86
