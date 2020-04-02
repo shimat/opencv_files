@@ -44,6 +44,8 @@ init:
 # Do not build feature branch with open Pull Requests
 skip_branch_with_pr: true
 
+cache: c:\tools\vcpkg\installed\
+
 platform:
   - x64
 #  - x86
