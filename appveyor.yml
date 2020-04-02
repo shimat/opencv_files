@@ -1,7 +1,7 @@
-version: 1.0.{build}
+version: 4.2.0-{build}
 
 image: 
-  - Ubuntu1804
+  - Visual Studio 2019
 
 init:
 - ps: |
@@ -44,52 +44,29 @@ init:
 # Do not build feature branch with open Pull Requests
 skip_branch_with_pr: true
 
+cache: c:\tools\vcpkg\installed\
+
+platform:
+  - x64
+  - x86
+
 before_build:
-  - sh: pwd
-  - sh: cd $APPVEYOR_BUILD_FOLDER
   - git submodule update --init --recursive
 
 install:
-  - sh: pwd
-  - sh: sudo apt update
-  - sh: sudo apt -y remove x264 libx264-dev
-  - sh: sudo apt -y install build-essential checkinstall cmake pkg-config yasm
-  - sh: sudo apt -y install git gfortran
-  - sh: sudo apt -y install libjpeg8-dev libpng-dev 
-  - sh: sudo apt -y install software-properties-common
-  - sh: sudo add-apt-repository "deb http://security.ubuntu.com/ubuntu xenial-security main"
-  - sh: sudo apt -y update 
-  - sh: sudo apt -y install libjasper1
-  - sh: sudo apt -y install libtiff-dev 
-  - sh: sudo apt -y install libavcodec-dev libavformat-dev libswscale-dev libdc1394-22-dev
-  - sh: sudo apt -y install libxine2-dev libv4l-dev
-  - sh: cd /usr/include/linux
-  - sh: sudo ln -s -f ../libv4l1-videodev.h videodev.h
-  - sh: cd $APPVEYOR_BUILD_FOLDER
-  - sh: sudo apt -y install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev
-  - sh: sudo apt -y install libgtk2.0-dev libtbb-dev qt5-default
-  - sh: sudo apt -y install libatlas-base-dev
-  - sh: sudo apt -y install libfaac-dev libmp3lame-dev libtheora-dev
-  - sh: sudo apt -y install libvorbis-dev libxvidcore-dev
-  - sh: sudo apt -y install libopencore-amrnb-dev libopencore-amrwb-dev
-  - sh: sudo apt -y install libavresample-dev
-  - sh: sudo apt -y install x264 v4l-utils
-  - sh: sudo apt -y install libwebp-dev
-  - sh: sudo apt -y install tesseract-ocr libtesseract-dev libleptonica-dev
+  - ps: |
+      Install-WindowsFeature Server-Media-Foundation
+      vcpkg install tesseract:${env:PLATFORM}-windows-static
+      vcpkg integrate install
 
 build_script:
-  - sh: cd ${APPVEYOR_BUILD_FOLDER}/opencv
-  - sh: mkdir build
-  - sh: cd build
-  - sh: cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=${APPVEYOR_BUILD_FOLDER}/build -D INSTALL_C_EXAMPLES=ON -D INSTALL_PYTHON_EXAMPLES=OFF -D BUILD_DOCS=OFF -D BUILD_EXAMPLES=OFF -D BUILD_TESTS=OFF -D BUILD_PERF_TESTS=OFF -D BUILD_opencv_apps=OFF -D BUILD_opencv_datasets=OFF -D BUILD_opencv_java_bindings_generator=OFF -D BUILD_opencv_python_bindings_generator=OFF -D BUILD_opencv_ts=OFF -D WITH_TBB=ON -D WITH_V4L=ON -D WITH_QT=OFF -D WITH_OPENGL=ON -D OPENCV_ENABLE_NONFREE=ON -D OPENCV_EXTRA_MODULES_PATH=../../opencv_contrib/modules -D BUILD_SHARED_LIBS=OFF ..
-  - sh: make -j4
-  - sh: make install
-  - sh: cd ${APPVEYOR_BUILD_FOLDER}
-  - sh: tar czf OpenCV_Ubuntu1804.tgz build
+  - ps: |
+      ls
+      . ".\build_windows.ps1"
+      BuildForWindows $env:PLATFORM "C:\Tools\vcpkg" $TRUE
 
-artifacts: 
-  - path: build/
-    name: OpenCV_Ubuntu1804
-    type: zip
-  - path: OpenCV_Ubuntu1804.tgz
-    name: OpenCV_Ubuntu1804_TGZ
+artifacts:   
+  - path: build_x64/install
+    name: artifacts_win_x64
+  - path: build_x86/install
+    name: artifacts_win_x86
