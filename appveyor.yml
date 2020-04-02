@@ -48,7 +48,7 @@ cache: c:\tools\vcpkg\installed\
 
 platform:
   - x64
-#  - x86
+  - x86
 
 before_build:
   - git submodule update --init --recursive
@@ -66,7 +66,6 @@ build_script:
       BuildForWindows $env:PLATFORM "C:\Tools\vcpkg" $TRUE
 
 artifacts:   
-  - path: build_x64
   - path: build_x64/install
     name: artifacts_x64
   - path: build_x86/install

@@ -15,7 +15,7 @@ function BuildForWindows($platform, $vcpkgPath, $runMsbuild) {
           -G "Visual Studio 16 2019" `
           -A $msbuildPlatform `
           -D CMAKE_BUILD_TYPE=Release `
-          -D CMAKE_INSTALL_PREFIX=${buildDirectory}/install `
+          -D CMAKE_INSTALL_PREFIX=install `
           -D INSTALL_C_EXAMPLES=ON `
           -D INSTALL_PYTHON_EXAMPLES=OFF `
           -D BUILD_ANDROID_PROJECTS=OFF `
