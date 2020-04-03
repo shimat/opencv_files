@@ -49,6 +49,8 @@ cache: c:\tools\vcpkg\installed\
 platform:
   - x64
   - x86
+#  - ARM
+#  - ARM64
 
 before_build:
   - git submodule update --init --recursive
@@ -56,17 +58,27 @@ before_build:
 install:
   - ps: |
       Install-WindowsFeature Server-Media-Foundation
-      vcpkg install tesseract:${env:PLATFORM}-windows-static
-      vcpkg integrate install
+      if ($env:PLATFORM -notlike 'ARM*'){
+          vcpkg install tesseract:${env:PLATFORM}-windows-static
+          vcpkg integrate install
+      }
 
 build_script:
   - ps: |
       ls
-      . ".\build_windows.ps1"
-      BuildForWindows $env:PLATFORM "C:\Tools\vcpkg" $TRUE
+      if ($env:PLATFORM -notlike 'ARM*'){
+          . ".\build_windows.ps1"
+          BuildForWindows $env:PLATFORM "C:\Tools\vcpkg" $TRUE
+      }
+      . ".\build_uwp.ps1"
+      BuildForUWP $env:PLATFORM "C:\Tools\vcpkg" $TRUE
 
 artifacts:   
-  - path: build_x64/install
+  - path: build_win_x64/install
     name: artifacts_win_x64
-  - path: build_x86/install
+  - path: build_win_x86/install
     name: artifacts_win_x86
+  - path: build_uwp_x64/install
+    name: artifacts_uwp_x64
+  - path: build_uwp_x86/install
+    name: artifacts_uwp_x86

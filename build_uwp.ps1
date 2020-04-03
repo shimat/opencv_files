@@ -1,19 +1,21 @@
-function BuildForWindows($platform, $vcpkgPath, $runMsbuild) {
+function BuildForUWP($platform, $vcpkgPath, $runMsbuild) {
 
-    $buildDirectory = "build_win_${platform}"
+    $buildDirectory = "build_uwp_${platform}"
     mkdir $buildDirectory -Force -ErrorAction Stop | Out-Null
     cd $buildDirectory
     pwd
 
-    if ($platform -eq "x64") {
-        $msbuildPlatform = "x64"
-    } else {
+    if ($platform -eq "x86") {
         $msbuildPlatform = "Win32"
+    } else {
+        $msbuildPlatform = $platform # x64/ARM/ARM64
     }
 
     cmake -ErrorAction Stop `
           -G "Visual Studio 16 2019" `
           -A $msbuildPlatform `
+          -D CMAKE_SYSTEM_NAME=WindowsStore `
+          -D CMAKE_SYSTEM_VERSION=10.0 `
           -D CMAKE_BUILD_TYPE=Release `
           -D CMAKE_INSTALL_PREFIX=install `
           -D INSTALL_C_EXAMPLES=ON `
@@ -37,8 +39,8 @@ function BuildForWindows($platform, $vcpkgPath, $runMsbuild) {
           -D BUILD_opencv_python_tests=OFF `
           -D BUILD_opencv_ts=OFF `
           -D BUILD_opencv_world=OFF `
-          -D WITH_MSMF=ON `
-          -D WITH_MSMF_DXVA=ON `
+          -D WITH_MSMF=OFF `
+          -D WITH_MSMF_DXVA=OFF `
           -D WITH_QT=OFF `
           -D WITH_TESSERACT=ON `
           -D Tesseract_INCLUDE_DIR="${vcpkgPath}/installed/${platform}-windows-static/include/tesseract" `
@@ -46,7 +48,7 @@ function BuildForWindows($platform, $vcpkgPath, $runMsbuild) {
           -D Lept_LIBRARY="${vcpkgPath}/installed/${platform}-windows-static/lib/leptonica-1.78.0.lib" `
           -D OPENCV_ENABLE_NONFREE=ON `
           -D OPENCV_EXTRA_MODULES_PATH=../opencv_contrib/modules `
-          -D BUILD_SHARED_LIBS=OFF ../opencv 
+          -D BUILD_SHARED_LIBS=ON ../opencv 
 
     if ($runMsbuild) {
         # Developer Powershell for VS 2019 
@@ -65,11 +67,10 @@ function BuildForWindows($platform, $vcpkgPath, $runMsbuild) {
 If ((Resolve-Path -Path $MyInvocation.InvocationName).ProviderPath -eq $MyInvocation.MyCommand.Path) {
 
   ##### Change here #####
-  $vcpkgPath = "C:\Tools\vcpkg"
   $platform = "x64"
   #$platform = "x86"
+  #$platform = "ARM"
+  #$platform = "ARM64"
 
-  Invoke-Expression "${vcpkgPath}\vcpkg.exe install tesseract:${platform}-windows-static" -ErrorAction Stop
-
-  BuildForWindows $platform $vcpkgPath $FALSE
+  BuildForUWP $platform $vcpkgPath $FALSE
 }
