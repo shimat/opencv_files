@@ -38,7 +38,7 @@ function BuildForUWP($platform, $vcpkgPath, $runMsbuild) {
           -D BUILD_opencv_python_bindings_generator=OFF `
           -D BUILD_opencv_python_tests=OFF `
           -D BUILD_opencv_ts=OFF `
-          -D BUILD_opencv_world=OFF `
+          -D BUILD_opencv_world=ON `
           -D WITH_MSMF=OFF `
           -D WITH_MSMF_DXVA=OFF `
           -D WITH_QT=OFF `
