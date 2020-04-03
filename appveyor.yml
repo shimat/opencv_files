@@ -70,12 +70,14 @@ install:
 build_script:
   - ps: |
       ls
-      #if ($env:CONFIGURATION -ne 'UWP'){
-      #    . ".\build_windows.ps1"
-      #    BuildForWindows $env:PLATFORM "C:\Tools\vcpkg" $TRUE
-      #}
-      #. ".\build_uwp.ps1"
-      #BuildForUWP $env:PLATFORM "C:\Tools\vcpkg" $TRUE
+      if ($env:CONFIGURATION -eq 'Windows'){
+          . ".\build_windows.ps1"
+          BuildForWindows $env:PLATFORM "C:\Tools\vcpkg" $TRUE
+      }
+      if ($env:CONFIGURATION -eq 'UWP'){
+          . ".\build_uwp.ps1"
+          BuildForUWP $env:PLATFORM "C:\Tools\vcpkg" $TRUE
+      }
 
 artifacts:   
   - path: build_win_x64/install
