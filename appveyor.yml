@@ -52,13 +52,17 @@ platform:
 #  - ARM
 #  - ARM64
 
+configuration:
+  - Windows
+  - UWP
+
 before_build:
   - git submodule update --init --recursive
 
 install:
   - ps: |
       Install-WindowsFeature Server-Media-Foundation
-      if ($env:PLATFORM -notlike 'ARM*'){
+      if ($env:CONFIGURATION -ne 'UWP'){
           vcpkg install tesseract:${env:PLATFORM}-windows-static
           vcpkg integrate install
       }
@@ -66,12 +70,12 @@ install:
 build_script:
   - ps: |
       ls
-      if ($env:PLATFORM -notlike 'ARM*'){
-          . ".\build_windows.ps1"
-          BuildForWindows $env:PLATFORM "C:\Tools\vcpkg" $TRUE
-      }
-      . ".\build_uwp.ps1"
-      BuildForUWP $env:PLATFORM "C:\Tools\vcpkg" $TRUE
+      #if ($env:CONFIGURATION -ne 'UWP'){
+      #    . ".\build_windows.ps1"
+      #    BuildForWindows $env:PLATFORM "C:\Tools\vcpkg" $TRUE
+      #}
+      #. ".\build_uwp.ps1"
+      #BuildForUWP $env:PLATFORM "C:\Tools\vcpkg" $TRUE
 
 artifacts:   
   - path: build_win_x64/install
