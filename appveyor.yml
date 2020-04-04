@@ -49,8 +49,8 @@ cache: c:\tools\vcpkg\installed\
 platform:
   - x64
   - x86
-#  - ARM
-#  - ARM64
+  - ARM
+  - ARM64
 
 configuration:
   - Windows
@@ -70,7 +70,7 @@ install:
 build_script:
   - ps: |
       ls
-      if ($env:CONFIGURATION -eq 'Windows'){
+      if (($env:CONFIGURATION -eq 'Windows') -And ($env:PLATFORM -notlike 'ARM*')){
           . ".\build_windows.ps1"
           BuildForWindows $env:PLATFORM "C:\Tools\vcpkg" $TRUE
       }
@@ -88,3 +88,7 @@ artifacts:
     name: artifacts_uwp_x64
   - path: build_uwp_x86/install
     name: artifacts_uwp_x86
+  - path: build_uwp_ARM64/install
+    name: artifacts_uwp_ARM64
+  - path: build_uwp_ARM/install
+    name: artifacts_uwp_ARM
