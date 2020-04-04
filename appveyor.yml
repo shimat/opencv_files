@@ -47,8 +47,8 @@ skip_branch_with_pr: true
 cache: c:\tools\vcpkg\installed\
 
 platform:
-  - x64
   - x86
+  - x64
   - ARM
 #  - ARM64
 
@@ -88,7 +88,7 @@ artifacts:
     name: opencv430_uwp_x64
   - path: build_uwp_x86/install
     name: opencv430_uwp_x86
-  - path: build_uwp_ARM64/install
-    name: opencv430_uwp_ARM64
+#  - path: build_uwp_ARM64/install
+#    name: opencv430_uwp_ARM64
   - path: build_uwp_ARM/install
     name: opencv430_uwp_ARM

@@ -9,8 +9,10 @@ function BuildForWindows($platform, $vcpkgPath, $runMsbuild) {
 
     if ($platform -eq "x64") {
         $msbuildPlatform = "x64"
+        $msmfFlag = "ON"
     } else {
         $msbuildPlatform = "Win32"
+        $msmfFlag = "OFF" # opencv_videoio430.lib(cap_msmf.obj) : error LNK2001: unresolved external symbol _MFVideoFormat_H263 
     }
 
     cmake -G "Visual Studio 16 2019" `
@@ -38,8 +40,8 @@ function BuildForWindows($platform, $vcpkgPath, $runMsbuild) {
           -D BUILD_opencv_python_tests=OFF `
           -D BUILD_opencv_ts=OFF `
           -D BUILD_opencv_world=OFF `
-          -D WITH_MSMF=ON `
-          -D WITH_MSMF_DXVA=ON `
+          -D WITH_MSMF=${msmfFlag} `
+          -D WITH_MSMF_DXVA=${msmfFlag} `
           -D WITH_QT=OFF `
           -D WITH_TESSERACT=ON `
           -D ENABLE_CXX11=1 `
