@@ -1,5 +1,7 @@
 function BuildForWindows($platform, $vcpkgPath, $runMsbuild) {
 
+    $ErrorActionPreference = "Stop"
+
     $buildDirectory = "build_win_${platform}"
     mkdir $buildDirectory -Force -ErrorAction Stop | Out-Null
     cd $buildDirectory
@@ -11,8 +13,7 @@ function BuildForWindows($platform, $vcpkgPath, $runMsbuild) {
         $msbuildPlatform = "Win32"
     }
 
-    cmake -ErrorAction Stop `
-          -G "Visual Studio 16 2019" `
+    cmake -G "Visual Studio 16 2019" `
           -A $msbuildPlatform `
           -D CMAKE_BUILD_TYPE=Release `
           -D CMAKE_INSTALL_PREFIX=install `

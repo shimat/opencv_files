@@ -1,5 +1,7 @@
 function BuildForUWP($platform, $vcpkgPath, $runMsbuild) {
 
+    $ErrorActionPreference = "Stop"
+
     $buildDirectory = "build_uwp_${platform}"
     mkdir $buildDirectory -Force -ErrorAction Stop | Out-Null
     cd $buildDirectory
@@ -11,8 +13,7 @@ function BuildForUWP($platform, $vcpkgPath, $runMsbuild) {
         $msbuildPlatform = $platform # x64/ARM/ARM64
     }
 
-    cmake -ErrorAction Stop `
-          -G "Visual Studio 16 2019" `
+    cmake -G "Visual Studio 16 2019" `
           -A $msbuildPlatform `
           -D CMAKE_SYSTEM_NAME=WindowsStore `
           -D CMAKE_SYSTEM_VERSION=10.0 `
