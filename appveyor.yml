@@ -81,14 +81,14 @@ build_script:
 
 artifacts:   
   - path: build_win_x64/install
-    name: artifacts_win_x64
+    name: opencv430_win_x64
   - path: build_win_x86/install
-    name: artifacts_win_x86
+    name: opencv430_win_x86
   - path: build_uwp_x64/install
-    name: artifacts_uwp_x64
+    name: opencv430_uwp_x64
   - path: build_uwp_x86/install
-    name: artifacts_uwp_x86
+    name: opencv430_uwp_x86
   - path: build_uwp_ARM64/install
-    name: artifacts_uwp_ARM64
+    name: opencv430_uwp_ARM64
   - path: build_uwp_ARM/install
-    name: artifacts_uwp_ARM
+    name: opencv430_uwp_ARM
