@@ -1,6 +1,6 @@
 function BuildForWindows($platform, $vcpkgPath, $runMsbuild) {
 
-    $ErrorActionPreference = "Stop"
+    #$ErrorActionPreference = "Stop"
 
     $buildDirectory = "build_win_${platform}"
     mkdir $buildDirectory -Force -ErrorAction Stop | Out-Null
