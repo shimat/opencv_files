@@ -42,7 +42,8 @@ function BuildForWindows($platform, $vcpkgPath, $runMsbuild) {
           -D WITH_MSMF_DXVA=ON `
           -D WITH_QT=OFF `
           -D WITH_TESSERACT=ON `
-          -D Tesseract_INCLUDE_DIR="${vcpkgPath}/installed/${platform}-windows-static/include/tesseract" `
+          -D ENABLE_CXX11=1 `
+          -D Tesseract_INCLUDE_DIR="${vcpkgPath}/installed/${platform}-windows-static/include" `
           -D Tesseract_LIBRARY="${vcpkgPath}/installed/${platform}-windows-static/lib/tesseract41.lib" `
           -D Lept_LIBRARY="${vcpkgPath}/installed/${platform}-windows-static/lib/leptonica-1.78.0.lib" `
           -D OPENCV_ENABLE_NONFREE=ON `
