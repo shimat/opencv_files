@@ -1,4 +1,4 @@
-version: 4.2.0-{build}
+version: 4.3.0-{build}
 
 image: 
   - Visual Studio 2019
@@ -49,6 +49,12 @@ cache: c:\tools\vcpkg\installed\
 platform:
   - x64
   - x86
+  - ARM
+#  - ARM64
+
+configuration:
+  - Windows
+  - UWP
 
 before_build:
   - git submodule update --init --recursive
@@ -56,17 +62,33 @@ before_build:
 install:
   - ps: |
       Install-WindowsFeature Server-Media-Foundation
-      vcpkg install tesseract:${env:PLATFORM}-windows-static
-      vcpkg integrate install
+      if ($env:CONFIGURATION -ne 'UWP'){
+          vcpkg install tesseract:${env:PLATFORM}-windows-static
+          vcpkg integrate install
+      }
 
 build_script:
   - ps: |
       ls
-      . ".\build_windows.ps1"
-      BuildForWindows $env:PLATFORM "C:\Tools\vcpkg" $TRUE
+      if (($env:CONFIGURATION -eq 'Windows') -And ($env:PLATFORM -notlike 'ARM*')){
+          . ".\build_windows.ps1"
+          BuildForWindows $env:PLATFORM "C:\Tools\vcpkg" $TRUE
+      }
+      if ($env:CONFIGURATION -eq 'UWP'){
+          . ".\build_uwp.ps1"
+          BuildForUWP $env:PLATFORM "C:\Tools\vcpkg" $TRUE
+      }
 
 artifacts:   
-  - path: build_x64/install
+  - path: build_win_x64/install
     name: artifacts_win_x64
-  - path: build_x86/install
+  - path: build_win_x86/install
     name: artifacts_win_x86
+  - path: build_uwp_x64/install
+    name: artifacts_uwp_x64
+  - path: build_uwp_x86/install
+    name: artifacts_uwp_x86
+  - path: build_uwp_ARM64/install
+    name: artifacts_uwp_ARM64
+  - path: build_uwp_ARM/install
+    name: artifacts_uwp_ARM
