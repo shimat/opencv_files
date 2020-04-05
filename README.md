@@ -14,8 +14,13 @@ OpenCV Windows binaries for [opencvsharp](https://github.com/shimat/opencvsharp)
 Please add paths of your cmake and vcpkg executables to the `PATH` environment variable.
 
 ## Build for Windows
-1. Run `build_windows.ps1`
-1. Open and build `build_win_x64/OpenCV.sln` by Visual Studio. 
+- Install Tesseract
+```
+vcpkg install tesseract:x64-windows-static
+vcpkg install tesseract:x86-windows-static
+```
+- Run `build_windows.ps1`
+- Open and build `build_win_[x64 or x86]/OpenCV.sln` by Visual Studio. 
 
 You can change the target platform and the vcpkg path by editing the .ps1 file.
   ```
