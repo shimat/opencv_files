@@ -14,6 +14,13 @@ OpenCV Windows binaries for [opencvsharp](https://github.com/shimat/opencvsharp)
 Please add paths of your cmake and vcpkg executables to the `PATH` environment variable.
 
 ## Build for Windows
+- Clone
+```
+git clone --recursive https://github.com/shimat/opencv_files
+# Or
+git clone https://github.com/shimat/opencv_files
+git submodule update --init --recursive
+```
 - Install Tesseract
 ```
 vcpkg install tesseract:x64-windows-static
@@ -33,3 +40,8 @@ You can change the target platform and the vcpkg path by editing the .ps1 file.
 ## Build for UWP
 1. Run `build_windows.ps1`
 1. Open and build `build_win_x64/OpenCV.sln` by Visual Studio. 
+
+## Release Packages
+https://github.com/shimat/opencv_files/releases
+
+The release packages are built by the [appveyor script](https://github.com/shimat/opencv_files/blob/master/appveyor.yml).
