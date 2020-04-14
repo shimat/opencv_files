@@ -38,6 +38,7 @@ You can change the target platform and the vcpkg path by editing the .ps1 file.
   ```
 
 ## Build for UWP
+1. Clone the repository
 1. Run `build_windows.ps1`
 1. Open and build `build_win_x64/OpenCV.sln` by Visual Studio. 
 
