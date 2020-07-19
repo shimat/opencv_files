@@ -1,4 +1,4 @@
-version: 4.3.0-{build}
+version: 4.4.0-{build}
 
 image: 
   - Visual Studio 2019
@@ -81,14 +81,14 @@ build_script:
 
 artifacts:   
   - path: build_win_x64/install
-    name: opencv430_win_x64
+    name: opencv440_win_x64
   - path: build_win_x86/install
-    name: opencv430_win_x86
+    name: opencv440_win_x86
   - path: build_uwp_x64/install
-    name: opencv430_uwp_x64
+    name: opencv440_uwp_x64
   - path: build_uwp_x86/install
-    name: opencv430_uwp_x86
+    name: opencv440_uwp_x86
 #  - path: build_uwp_ARM64/install
-#    name: opencv430_uwp_ARM64
+#    name: opencv440_uwp_ARM64
   - path: build_uwp_ARM/install
-    name: opencv430_uwp_ARM
+    name: opencv440_uwp_ARM
