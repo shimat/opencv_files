@@ -15,7 +15,7 @@ jobs:
         platform: ["win", "uwp"]
         arch: ["x86", "x64", "ARM"]
         exclude:
-          - platform: Windows
+          - platform: win
             arch: ARM
 
     runs-on: windows-2019
