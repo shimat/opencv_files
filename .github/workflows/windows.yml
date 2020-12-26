@@ -7,16 +7,16 @@ on:
 env:
   OPENCV_VERSION: 4.5.1
 
-strategy:
-  matrix:
-    platform: [Windows, UWP]
-    arch: [x86, x64, ARM]
-    exclude:
-      - platform: Windows
-        arch: ARM
-
 jobs:
   build:
+
+    strategy:
+      matrix:
+        platform: [Windows, UWP]
+        arch: [x86, x64, ARM]
+        exclude:
+          - platform: Windows
+            arch: ARM
 
     runs-on: windows-2019
     
