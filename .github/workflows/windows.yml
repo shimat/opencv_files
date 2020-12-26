@@ -32,15 +32,15 @@ jobs:
         run: |
           Install-WindowsFeature Server-Media-Foundation
 
-      - name:
+      - name: Build
         run: |
-          if (${{matrix.platform}} -eq 'win'){
+          if ("${{matrix.platform}}" -eq 'win'){
               vcpkg install tesseract:${{matrix.arch}}-windows-static
               vcpkg integrate install
               . ".\build_windows.ps1"
               BuildForWindows ${{matrix.arch}} "C:\Tools\vcpkg" $TRUE
           }
-          elseif (${{matrix.platform}} -eq 'uwp'){
+          elseif ("${{matrix.platform}}" -eq 'uwp'){
               . ".\build_uwp.ps1"
               BuildForUWP ${{matrix.arch}} "C:\Tools\vcpkg" $TRUE
           }
