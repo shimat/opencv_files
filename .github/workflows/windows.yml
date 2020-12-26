@@ -1,0 +1,39 @@
+name: Windows Server 2019
+
+on:
+  pull_request:
+    types: [synchronize, opened]
+
+env:
+  OPENCV_VERSION: 4.5.1
+
+strategy:
+  matrix:
+    platform: [Windows, UWP]
+    arch: [x86, x64, ARM]
+    exclude:
+      - platform: Windows
+        arch: ARM
+
+jobs:
+  build:
+
+    runs-on: windows-2019
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+          submodules: recursive
+
+      - name: Test
+        shell: powershell
+        run: |
+          echo "platform = ${matrix.platform}"
+          echo "arch = ${matrix.arch}"
+
+      - name: Install Server-Media-Foundation
+        shell: powershell
+        run: |
+          Install-WindowsFeature Server-Media-Foundation
