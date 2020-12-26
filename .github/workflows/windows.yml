@@ -12,7 +12,7 @@ jobs:
 
     strategy:
       matrix:
-        platform: [Windows, UWP]
+        platform: [win, uwp]
         arch: [x86, x64, ARM]
         exclude:
           - platform: Windows
@@ -27,13 +27,26 @@ jobs:
           fetch-depth: 1
           submodules: recursive
 
-      - name: Test
-        shell: powershell
-        run: |
-          echo "platform = ${{matrix.platform}}"
-          echo "arch = ${{matrix.arch}}"
-
       - name: Install Server-Media-Foundation
         shell: powershell
         run: |
           Install-WindowsFeature Server-Media-Foundation
+
+      - name:
+        run: |
+          if (${{matrix.platform}} -eq 'win'){
+              vcpkg install tesseract:${{matrix.arch}}-windows-static
+              vcpkg integrate install
+              . ".\build_windows.ps1"
+              BuildForWindows ${{matrix.arch}} "C:\Tools\vcpkg" $TRUE
+          }
+          elseif (${{matrix.platform}} -eq 'uwp'){
+              . ".\build_uwp.ps1"
+              BuildForUWP ${{matrix.arch}} "C:\Tools\vcpkg" $TRUE
+          }
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v1
+        with:
+          name: artifacts_${{matrix.platform}}-${{matrix.arch}}
+          path: build_${{matrix.platform}}_${{matrix.arch}}/install
