@@ -1,0 +1,67 @@
+name: Windows Server 2019
+
+on:
+  pull_request:
+    types: [synchronize, opened]
+
+env:
+  OPENCV_VERSION: 4.5.1
+
+jobs:
+  build:
+
+    strategy:
+      matrix:
+        platform: ["win", "uwp"]
+        arch: ["x86", "x64", "ARM"]
+        exclude:
+          - platform: win
+            arch: ARM
+
+    runs-on: windows-2019
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+          submodules: recursive
+
+      - name: Install Server-Media-Foundation
+        shell: powershell
+        run: |
+          Install-WindowsFeature Server-Media-Foundation
+
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.0.2
+
+      - name: Vcpkg
+        shell: powershell
+        run: |
+          if ("${{matrix.platform}}" -eq 'win'){
+              vcpkg install tesseract:${{matrix.arch}}-windows-static
+              vcpkg integrate install
+              ls C:/vcpkg
+              ls C:/vcpkg/installed
+              ls C:/vcpkg/installed/${{matrix.arch}}-windows-static
+              ls C:/vcpkg/installed/${{matrix.arch}}-windows-static/include
+              ls C:/vcpkg/installed/${{matrix.arch}}-windows-static/lib
+          }
+
+      - name: Build
+        shell: powershell
+        run: |
+          if ("${{matrix.platform}}" -eq 'win'){
+              . ".\build_windows.ps1"
+              BuildForWindows ${{matrix.arch}} "C:\vcpkg" $TRUE
+          }
+          elseif ("${{matrix.platform}}" -eq 'uwp'){
+              . ".\build_uwp.ps1"
+              BuildForUWP ${{matrix.arch}} "C:\vcpkg" $TRUE
+          }
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v1
+        with:
+          name: artifacts_${{matrix.platform}}-${{matrix.arch}}
+          path: build_${{matrix.platform}}_${{matrix.arch}}/install
