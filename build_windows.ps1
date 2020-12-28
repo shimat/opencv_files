@@ -45,9 +45,6 @@ function BuildForWindows($platform, $vcpkgPath, $runMsbuild) {
           -D WITH_QT=OFF `
           -D WITH_TESSERACT=ON `
           -D ENABLE_CXX11=1 `
-          -D Tesseract_INCLUDE_DIR="${vcpkgPath}/installed/${platform}-windows-static/include" `
-          -D Tesseract_LIBRARY="${vcpkgPath}/installed/${platform}-windows-static/lib/tesseract41.lib" `
-          -D Lept_LIBRARY="${vcpkgPath}/installed/${platform}-windows-static/lib/leptonica-1.78.0.lib" `
           -D OPENCV_ENABLE_NONFREE=ON `
           -D OPENCV_EXTRA_MODULES_PATH=../opencv_contrib/modules `
           -D BUILD_SHARED_LIBS=OFF ../opencv 
@@ -74,6 +71,7 @@ If ((Resolve-Path -Path $MyInvocation.InvocationName).ProviderPath -eq $MyInvoca
   #$platform = "x86"
 
   Invoke-Expression "${vcpkgPath}\vcpkg.exe install tesseract:${platform}-windows-static" -ErrorAction Stop
+  #Invoke-Expression "${vcpkgPath}\vcpkg.exe integrate install" -ErrorAction Stop
 
   BuildForWindows $platform $vcpkgPath $FALSE
 }
