@@ -35,12 +35,17 @@ jobs:
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v1.0.2
 
-      - name: vcpkg
+      - name: Vcpkg
         shell: powershell
         run: |
           if ("${{matrix.platform}}" -eq 'win'){
               vcpkg install tesseract:${{matrix.arch}}-windows-static
               vcpkg integrate install
+              ls C:/vcpkg
+              ls C:/vcpkg/installed
+              ls C:/vcpkg/installed/${{matrix.arch}}-windows-static
+              ls C:/vcpkg/installed/${{matrix.arch}}-windows-static/include
+              ls C:/vcpkg/installed/${{matrix.arch}}-windows-static/lib
           }
 
       - name: Build
@@ -48,11 +53,11 @@ jobs:
         run: |
           if ("${{matrix.platform}}" -eq 'win'){
               . ".\build_windows.ps1"
-              BuildForWindows ${{matrix.arch}} "C:\Tools\vcpkg" $TRUE
+              BuildForWindows ${{matrix.arch}} "C:\vcpkg" $TRUE
           }
           elseif ("${{matrix.platform}}" -eq 'uwp'){
               . ".\build_uwp.ps1"
-              BuildForUWP ${{matrix.arch}} "C:\Tools\vcpkg" $TRUE
+              BuildForUWP ${{matrix.arch}} "C:\vcpkg" $TRUE
           }
 
       - name: Upload artifacts
