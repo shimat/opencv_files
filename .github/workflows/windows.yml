@@ -19,7 +19,7 @@ jobs:
             arch: ARM
 
     runs-on: windows-2019
-    
+
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -35,11 +35,18 @@ jobs:
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v1.0.2
 
-      - name: Build
+      - name: vcpkg
+        shell: powershell
         run: |
           if ("${{matrix.platform}}" -eq 'win'){
               vcpkg install tesseract:${{matrix.arch}}-windows-static
               vcpkg integrate install
+          }
+
+      - name: Build
+        shell: powershell
+        run: |
+          if ("${{matrix.platform}}" -eq 'win'){
               . ".\build_windows.ps1"
               BuildForWindows ${{matrix.arch}} "C:\Tools\vcpkg" $TRUE
           }
