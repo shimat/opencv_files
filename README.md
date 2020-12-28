@@ -2,7 +2,7 @@
 
 OpenCV Windows binaries for [opencvsharp](https://github.com/shimat/opencvsharp)
 
-[![Build status](https://ci.appveyor.com/api/projects/status/7869dutiou2o2c79/branch/master?svg=true)](https://ci.appveyor.com/project/shimat/opencv-files/branch/master)
+![Windows Server 2019](https://github.com/shimat/opencv_files/workflows/Windows%20Server%202019/badge.svg)
 
 ## Requirements
 - [CMake](https://cmake.org/)
