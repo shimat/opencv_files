@@ -44,6 +44,11 @@ function BuildForWindows($platform, $vcpkgPath, $runMsbuild) {
           -D WITH_MSMF_DXVA=${msmfFlag} `
           -D WITH_QT=OFF `
           -D WITH_TESSERACT=ON `
+          -D WITH_CUDA=ON `
+          -D WITH_CUDNN=ON `
+          -D OPENCV_DNN_CUDA=ON `
+          -D CUDNN_LIBRARY="C:/lib/cudnn-11.1-windows-x64-v8.0.5.39/cuda/lib/x64" `
+          -D CUDNN_INCLUDE_DIR="C:/lib/cudnn-11.1-windows-x64-v8.0.5.39/cuda/include" `
           -D Tesseract_INCLUDE_DIR="${vcpkgPath}/installed/${platform}-windows-static/include" `
           -D Tesseract_LIBRARY="${vcpkgPath}/installed/${platform}-windows-static/lib/tesseract41.lib" `
           -D Lept_LIBRARY="${vcpkgPath}/installed/${platform}-windows-static/lib/leptonica-1.78.0.lib" `
