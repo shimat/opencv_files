@@ -50,10 +50,10 @@ jobs:
           ls ${env:VCPKG_ROOT}
           & ${env:VCPKG_ROOT}\vcpkg install tesseract:${{matrix.arch}}-windows-static
           & ${env:VCPKG_ROOT}\vcpkg integrate install
-          ls $VCPKG_ROOT\installed
-          ls $VCPKG_ROOT\installed\${{matrix.arch}}-windows-static
-          ls $VCPKG_ROOT\installed\${{matrix.arch}}-windows-static\include
-          ls $VCPKG_ROOT\installed\${{matrix.arch}}-windows-static\lib
+          ls ${env:VCPKG_ROOT}\installed
+          ls ${env:VCPKG_ROOT}\installed\${{matrix.arch}}-windows-static
+          ls ${env:VCPKG_ROOT}\installed\${{matrix.arch}}-windows-static\include
+          ls ${env:VCPKG_ROOT}\installed\${{matrix.arch}}-windows-static\lib
 
       - name: Build
         shell: powershell
