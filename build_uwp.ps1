@@ -43,6 +43,7 @@ function BuildForUWP($platform, $vcpkgPath, $runMsbuild) {
           -D WITH_MSMF=OFF `
           -D WITH_MSMF_DXVA=OFF `
           -D WITH_QT=OFF `
+          -D WITH_FREETYPE=OFF `
           -D WITH_TESSERACT=ON `
           -D Tesseract_INCLUDE_DIR="${vcpkgPath}/installed/${platform}-windows-static/include/tesseract" `
           -D Tesseract_LIBRARY="${vcpkgPath}/installed/${platform}-windows-static/lib/tesseract41.lib" `
