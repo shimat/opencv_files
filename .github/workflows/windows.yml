@@ -43,15 +43,13 @@ jobs:
           vcpkgGitCommitId: ec6fe06e8da05a8157dc8581fa96b36b571c1bd5 # tag:2020.11-1
 
       - name: Vcpkg
-        shell: cmd
+        shell: powershell
         if: ${{ matrix.platform == 'win' }}
         run: |
           echo $VCPKG_ROOT
           ls $VCPKG_ROOT
-          $VCPKG_ROOT\vcpkg install tesseract:${{matrix.arch}}-windows-static
-          $VCPKG_ROOT\vcpkg integrate install
-          ls C:/vcpkg
-          ls C:/vcpkg/installed
+          & $VCPKG_ROOT\vcpkg install tesseract:${{matrix.arch}}-windows-static
+          & $VCPKG_ROOT\vcpkg integrate install
           ls $VCPKG_ROOT\installed
           ls $VCPKG_ROOT\installed\${{matrix.arch}}-windows-static
           ls $VCPKG_ROOT\installed\${{matrix.arch}}-windows-static\include
