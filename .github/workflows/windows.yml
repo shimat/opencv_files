@@ -37,36 +37,36 @@ jobs:
 
       - name: Restore from cache and install vcpkg
         uses: lukka/run-vcpkg@v6
+        if: ${{ matrix.platform == 'win' }}
         with:
           setupOnly: true
           vcpkgGitCommitId: ec6fe06e8da05a8157dc8581fa96b36b571c1bd5 # tag:2020.11-1
 
       - name: Vcpkg
         shell: powershell
+        if: ${{ matrix.platform == 'win' }}
         run: |
-          if ("${{matrix.platform}}" -eq 'win'){
-              echo $VCPKG_ROOT
-              ls $VCPKG_ROOT
-              $VCPKG_ROOT/vcpkg install tesseract:${{matrix.arch}}-windows-static
-              $VCPKG_ROOT/vcpkg integrate install
-              ls C:/vcpkg
-              ls C:/vcpkg/installed
-              ls $VCPKG_ROOT/installed
-              ls $VCPKG_ROOT/installed/${{matrix.arch}}-windows-static
-              ls $VCPKG_ROOT/installed/${{matrix.arch}}-windows-static/include
-              ls $VCPKG_ROOT/installed/${{matrix.arch}}-windows-static/lib
-          }
+          echo $VCPKG_ROOT
+          ls $VCPKG_ROOT
+          $VCPKG_ROOT\vcpkg install tesseract:${{matrix.arch}}-windows-static
+          $VCPKG_ROOT\vcpkg integrate install
+          ls C:/vcpkg
+          ls C:/vcpkg/installed
+          ls $VCPKG_ROOT\installed
+          ls $VCPKG_ROOT\installed\${{matrix.arch}}-windows-static
+          ls $VCPKG_ROOT\installed\${{matrix.arch}}-windows-static\include
+          ls $VCPKG_ROOT\installed\${{matrix.arch}}-windows-static\lib
 
       - name: Build
         shell: powershell
         run: |
           if ("${{matrix.platform}}" -eq 'win'){
-              . ".\build_windows.ps1"
-              BuildForWindows ${{matrix.arch}} "C:\vcpkg" $TRUE
+            . ".\build_windows.ps1"
+            BuildForWindows ${{matrix.arch}} "C:\vcpkg" $TRUE
           }
           elseif ("${{matrix.platform}}" -eq 'uwp'){
-              . ".\build_uwp.ps1"
-              BuildForUWP ${{matrix.arch}} "C:\vcpkg" $TRUE
+            . ".\build_uwp.ps1"
+            BuildForUWP ${{matrix.arch}} "C:\vcpkg" $TRUE
           }
 
       - name: Upload artifacts
