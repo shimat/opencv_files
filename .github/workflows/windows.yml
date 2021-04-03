@@ -43,7 +43,7 @@ jobs:
           vcpkgGitCommitId: ec6fe06e8da05a8157dc8581fa96b36b571c1bd5 # tag:2020.11-1
 
       - name: Vcpkg
-        shell: powershell
+        shell: cmd
         if: ${{ matrix.platform == 'win' }}
         run: |
           echo $VCPKG_ROOT
