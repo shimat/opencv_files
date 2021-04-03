@@ -46,10 +46,10 @@ jobs:
         shell: powershell
         if: ${{ matrix.platform == 'win' }}
         run: |
-          echo $VCPKG_ROOT
-          ls $VCPKG_ROOT
-          & $VCPKG_ROOT\vcpkg install tesseract:${{matrix.arch}}-windows-static
-          & $VCPKG_ROOT\vcpkg integrate install
+          echo ${env:VCPKG_ROOT}
+          ls ${env:VCPKG_ROOT}
+          & ${env:VCPKG_ROOT}\vcpkg install tesseract:${{matrix.arch}}-windows-static
+          & ${env:VCPKG_ROOT}\vcpkg integrate install
           ls $VCPKG_ROOT\installed
           ls $VCPKG_ROOT\installed\${{matrix.arch}}-windows-static
           ls $VCPKG_ROOT\installed\${{matrix.arch}}-windows-static\include
