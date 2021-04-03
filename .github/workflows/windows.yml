@@ -5,7 +5,7 @@ on:
     types: [synchronize, opened]
 
 env:
-  OPENCV_VERSION: 4.5.1
+  OPENCV_VERSION: 4.5.2
 
 jobs:
   build:
@@ -35,17 +35,26 @@ jobs:
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v1.0.2
 
+      - name: Restore from cache and install vcpkg
+        uses: lukka/run-vcpkg@v6
+        with:
+          setupOnly: true
+          vcpkgGitCommitId: ec6fe06e8da05a8157dc8581fa96b36b571c1bd5 # tag:2020.11-1
+
       - name: Vcpkg
         shell: powershell
         run: |
           if ("${{matrix.platform}}" -eq 'win'){
-              vcpkg install tesseract:${{matrix.arch}}-windows-static
-              vcpkg integrate install
+              echo $VCPKG_ROOT
+              ls $VCPKG_ROOT
+              $VCPKG_ROOT/vcpkg install tesseract:${{matrix.arch}}-windows-static
+              $VCPKG_ROOT/vcpkg integrate install
               ls C:/vcpkg
               ls C:/vcpkg/installed
-              ls C:/vcpkg/installed/${{matrix.arch}}-windows-static
-              ls C:/vcpkg/installed/${{matrix.arch}}-windows-static/include
-              ls C:/vcpkg/installed/${{matrix.arch}}-windows-static/lib
+              ls $VCPKG_ROOT/installed
+              ls $VCPKG_ROOT/installed/${{matrix.arch}}-windows-static
+              ls $VCPKG_ROOT/installed/${{matrix.arch}}-windows-static/include
+              ls $VCPKG_ROOT/installed/${{matrix.arch}}-windows-static/lib
           }
 
       - name: Build
