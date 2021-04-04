@@ -35,42 +35,37 @@ jobs:
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v1.0.2
 
-      - name: Vcpkg
-        shell: powershell
-        if: ${{ matrix.platform == 'win' }}
-        run: |
-          vcpkg version
-          vcpkg install tesseract:${{matrix.arch}}-windows-static
-          vcpkg integrate install
-          vcpkg list
-
-      - name: vcpkg artifacts
-        uses: actions/upload-artifact@v1
-        if: ${{ always() && matrix.platform == 'win' }}
-        with:
-          name: log-${{matrix.platform}}-${{matrix.arch}}
-          path: C:/vcpkg/buildtrees/bzip2/*.log
-
-#      - name: Restore from cache and install vcpkg
-#        uses: lukka/run-vcpkg@v6
-#        if: ${{ matrix.platform == 'win' }}
-#        with:
-#          setupOnly: true
-#          vcpkgGitCommitId: ec6fe06e8da05a8157dc8581fa96b36b571c1bd5 # tag:2020.11-1
-
 #      - name: Vcpkg
 #        shell: powershell
 #        if: ${{ matrix.platform == 'win' }}
 #        run: |
-#          echo ${env:VCPKG_ROOT}
-#          ls ${env:VCPKG_ROOT}
-#          & ${env:VCPKG_ROOT}\vcpkg install tesseract:${{matrix.arch}}-windows-static
-#          & ${env:VCPKG_ROOT}\vcpkg integrate install
-#          & ${env:VCPKG_ROOT}\vcpkg list
-#          ls ${env:VCPKG_ROOT}\installed
-#          ls ${env:VCPKG_ROOT}\installed\${{matrix.arch}}-windows-static
-#          ls ${env:VCPKG_ROOT}\installed\${{matrix.arch}}-windows-static\include
-#          ls ${env:VCPKG_ROOT}\installed\${{matrix.arch}}-windows-static\lib
+#          vcpkg version
+#          vcpkg install tesseract:${{matrix.arch}}-windows-static
+#          vcpkg integrate install
+#          vcpkg list
+
+      - name: Restore from cache and install vcpkg
+        uses: lukka/run-vcpkg@v6
+        if: ${{ matrix.platform == 'win' }}
+        with:
+          setupOnly: true
+          #vcpkgGitCommitId: ec6fe06e8da05a8157dc8581fa96b36b571c1bd5 # tag:2020.11-1
+          vcpkgGitCommitId: dbd2dd67bb1df3a0c1e1daffa66a50dec574491d
+          vcpkgGitURL: https://github.com/shimat/vcpkg.git
+
+      - name: Vcpkg
+        shell: powershell
+        if: ${{ matrix.platform == 'win' }}
+        run: |
+          echo ${env:VCPKG_ROOT}
+          ls ${env:VCPKG_ROOT}
+          & ${env:VCPKG_ROOT}\vcpkg install tesseract:${{matrix.arch}}-windows-static
+          & ${env:VCPKG_ROOT}\vcpkg integrate install
+          & ${env:VCPKG_ROOT}\vcpkg list
+          ls ${env:VCPKG_ROOT}\installed
+          ls ${env:VCPKG_ROOT}\installed\${{matrix.arch}}-windows-static
+          ls ${env:VCPKG_ROOT}\installed\${{matrix.arch}}-windows-static\include
+          ls ${env:VCPKG_ROOT}\installed\${{matrix.arch}}-windows-static\lib
 
       - name: Build
         shell: powershell
