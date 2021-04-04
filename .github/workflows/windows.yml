@@ -44,7 +44,7 @@ jobs:
 #          vcpkg integrate install
 #          vcpkg list
 
-      - name: Restore from cache and install vcpkg
+      - name: Setup vcpkg
         uses: lukka/run-vcpkg@v6
         if: ${{ matrix.platform == 'win' }}
         with:
@@ -72,11 +72,11 @@ jobs:
         run: |
           if ("${{matrix.platform}}" -eq 'win'){
             . ".\build_windows.ps1"
-            BuildForWindows ${{matrix.arch}} "C:\vcpkg" $TRUE
+            BuildForWindows ${{matrix.arch}} "${env:VCPKG_ROOT}" $TRUE
           }
           elseif ("${{matrix.platform}}" -eq 'uwp'){
             . ".\build_uwp.ps1"
-            BuildForUWP ${{matrix.arch}} "C:\vcpkg" $TRUE
+            BuildForUWP ${{matrix.arch}} "${env:VCPKG_ROOT}" $TRUE
           }
 
       - name: Upload artifacts
