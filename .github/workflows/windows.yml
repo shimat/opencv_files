@@ -46,10 +46,10 @@ jobs:
 
       - name: vcpkg artifacts
         uses: actions/upload-artifact@v1
-        if: ${{ always() }}
+        if: ${{ always() && matrix.platform == 'win' }}
         with:
           name: log-${{matrix.platform}}-${{matrix.arch}}
-          path: C:/vcpkg/buildtrees/bzip2/git-init-x86-windows-static-out.log
+          path: C:/vcpkg/buildtrees/bzip2/git-init-${{matrix.arch}}-windows-static-out.log
 
 #      - name: Restore from cache and install vcpkg
 #        uses: lukka/run-vcpkg@v6
