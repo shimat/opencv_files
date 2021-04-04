@@ -43,6 +43,7 @@ jobs:
           vcpkg update
           vcpkg install tesseract:${{matrix.arch}}-windows-static
           vcpkg integrate install
+          vcpkg list
 
 #      - name: Restore from cache and install vcpkg
 #        uses: lukka/run-vcpkg@v6
