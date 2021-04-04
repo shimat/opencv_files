@@ -4,6 +4,3 @@
 [submodule "opencv_contrib"]
 	path = opencv_contrib
 	url = https://github.com/opencv/opencv_contrib
-[submodule "vcpkg_fork"]
-	path = vcpkg_fork
-	url = https://github.com/shimat/vcpkg
