@@ -50,7 +50,7 @@ jobs:
         with:
           setupOnly: true
           #vcpkgGitCommitId: ec6fe06e8da05a8157dc8581fa96b36b571c1bd5 # tag:2020.11-1
-          vcpkgGitCommitId: dbd2dd67bb1df3a0c1e1daffa66a50dec574491d
+          vcpkgGitCommitId: 3f90ecc927c9f1ad871fde3ee83dfbc292d34bab
           vcpkgGitURL: https://github.com/shimat/vcpkg.git
 
       - name: Vcpkg
