@@ -79,8 +79,14 @@ jobs:
             BuildForUWP ${{matrix.arch}} "${env:VCPKG_ROOT}" $TRUE
           }
 
+      - id: version
+        shell: powershell
+        run: |
+          $v = ${env:OPENCV_VERSION}.Replace(".", "")
+          echo "::set-output name=OPENCV_VERSION_MOD::${v}"
+
       - name: Upload artifacts
         uses: actions/upload-artifact@v1
         with:
-          name: artifacts_${{matrix.platform}}-${{matrix.arch}}
+          name: opencv${{steps.version.outputs.OPENCV_VERSION_MOD}}_${{matrix.platform}}_${{matrix.arch}}
           path: build_${{matrix.platform}}_${{matrix.arch}}/install
