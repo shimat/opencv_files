@@ -88,5 +88,5 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v1
         with:
-          name: opencv${{steps.version.outputs.OPENCV_VERSION_MOD}}_${{matrix.platform}}-${{matrix.arch}}
+          name: opencv${{steps.version.outputs.OPENCV_VERSION_MOD}}_${{matrix.platform}}_${{matrix.arch}}
           path: build_${{matrix.platform}}_${{matrix.arch}}/install
