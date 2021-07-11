@@ -83,7 +83,7 @@ jobs:
         shell: powershell
         run: |
           $v = ${env:OPENCV_VERSION}.Replace(".", "")
-          echo '::set-output name=OPENCV_VERSION_MOD::${v}'
+          echo "::set-output name=OPENCV_VERSION_MOD::${v}"
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v1
