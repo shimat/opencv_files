@@ -35,8 +35,8 @@ function BuildForWindows($platform, $vcpkgPath, $runMsbuild) {
           -D BUILD_opencv_gapi=OFF `
           -D BUILD_opencv_java_bindings_generator=OFF `
           -D BUILD_opencv_js=OFF `
-          -D BUILD_opencv_python2=OFF `
-          -D BUILD_opencv_python3=OFF `
+          -D BUILD_opencv_js_bindings_generator=OFF `
+          -D BUILD_opencv_objc_bindings_generator=OFF `
           -D BUILD_opencv_python_bindings_generator=OFF `
           -D BUILD_opencv_python_tests=OFF `
           -D BUILD_opencv_ts=OFF `
