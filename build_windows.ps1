@@ -16,7 +16,7 @@ function BuildForWindows($platform, $vcpkgPath, $runMsbuild) {
         $msmfFlag = "OFF" # opencv_videoio430.lib(cap_msmf.obj) : error LNK2001: unresolved external symbol _MFVideoFormat_H263 
     }
 
-    cmake -G "Visual Studio 17 2021" `
+    cmake -G "Visual Studio 17 2022" `
         -A $msbuildPlatform `
         -D CMAKE_BUILD_TYPE=Release `
         -D CMAKE_INSTALL_PREFIX=install `
