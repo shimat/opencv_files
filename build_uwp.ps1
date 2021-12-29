@@ -13,7 +13,7 @@ function BuildForUWP($platform, $vcpkgPath, $runMsbuild) {
         $msbuildPlatform = $platform # x64/ARM/ARM64
     }
 
-    cmake -G "Visual Studio 16 2019" `
+    cmake -G "Visual Studio 17 2021" `
           -A $msbuildPlatform `
           -D CMAKE_SYSTEM_NAME=WindowsStore `
           -D CMAKE_SYSTEM_VERSION=10.0 `
@@ -21,17 +21,14 @@ function BuildForUWP($platform, $vcpkgPath, $runMsbuild) {
           -D CMAKE_INSTALL_PREFIX=install `
           -D INSTALL_C_EXAMPLES=ON `
           -D INSTALL_PYTHON_EXAMPLES=OFF `
-          -D BUILD_ANDROID_PROJECTS=OFF `
-          -D BUILD_ANDROID_EXAMPLES=OFF `
           -D BUILD_DOCS=OFF `
-          -D BUILD_WITH_DEBUG_INFO=OFF `
           -D BUILD_EXAMPLES=OFF `
           -D BUILD_TESTS=OFF `
           -D BUILD_PERF_TESTS=OFF `
           -D BUILD_JAVA=OFF `
+          -D BUILD_WITH_DEBUG_INFO=OFF `
           -D BUILD_opencv_apps=OFF `
           -D BUILD_opencv_datasets=OFF `
-          -D BUILD_opencv_freetype=OFF `
           -D BUILD_opencv_gapi=OFF `
           -D BUILD_opencv_java_bindings_generator=OFF `
           -D BUILD_opencv_js=OFF `
