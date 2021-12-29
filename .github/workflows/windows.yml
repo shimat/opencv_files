@@ -45,12 +45,12 @@ jobs:
 #          vcpkg list
 
       - name: Setup vcpkg
-        uses: lukka/run-vcpkg@v6
+        uses: lukka/run-vcpkg@v10.0
         if: ${{ matrix.platform == 'win' }}
         with:
           setupOnly: true
           #vcpkgGitCommitId: 9231937a9a2b57f4bda7a724af4f3743ace81cc0 
-          vcpkgGitCommitId: 20eed0fd06d660f05dc4028a1f9591c97d85fac4 # v10.0
+          vcpkgGitCommitId: 9502b2044d7fbe7a885f824f58e0b672e8b74886 # https://github.com/shimat/vcpkg/commit/9502b2044d7fbe7a885f824f58e0b672e8b74886
           vcpkgGitURL: https://github.com/shimat/vcpkg.git
 
       - name: Vcpkg
