@@ -48,10 +48,12 @@ function BuildForWindows($platform, $vcpkgPath, $runMsbuild) {
         -D WITH_TESSERACT=ON `
         -D Tesseract_INCLUDE_DIR="${vcpkgPath}/installed/${platform}-windows-static/include" `
         -D Tesseract_LIBRARY="${vcpkgPath}/installed/${platform}-windows-static/lib/tesseract41.lib" `
-        -D Lept_LIBRARY="${vcpkgPath}/installed/${platform}-windows-static/lib/leptonica-1.78.0.lib" `
+        -D Lept_LIBRARY="${vcpkgPath}/installed/${platform}-windows-static/lib/leptonica-1.81.0.lib" `
+        -D ENABLE_CXX11=1 `
         -D OPENCV_ENABLE_NONFREE=ON `
         -D OPENCV_EXTRA_MODULES_PATH=../opencv_contrib/modules `
         -D BUILD_SHARED_LIBS=OFF ../opencv 
+    # ENABLE_CXX11 is for Tesseract (https://github.com/opencv/opencv_contrib/blob/a26f71313009c93d105151094436eecd4a0990ed/modules/text/cmake/init.cmake#L19)
 
     if ($runMsbuild) {
         # Developer Powershell for VS 2019 
@@ -70,7 +72,7 @@ function BuildForWindows($platform, $vcpkgPath, $runMsbuild) {
 If ((Resolve-Path -Path $MyInvocation.InvocationName).ProviderPath -eq $MyInvocation.MyCommand.Path) {
 
     ##### Change here #####
-    $vcpkgPath = "C:\Tools\vcpkg"
+    $vcpkgPath = "C:\Projects\vcpkg"
     $platform = "x64"
     #$platform = "x86"
 
