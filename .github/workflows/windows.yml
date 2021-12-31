@@ -1,11 +1,11 @@
-name: Windows Server 2019
+name: Windows Server 2022
 
 on:
   pull_request:
     types: [synchronize, opened]
 
 env:
-  OPENCV_VERSION: 4.5.3
+  OPENCV_VERSION: 4.5.5
 
 jobs:
   build:
@@ -18,7 +18,7 @@ jobs:
           - platform: win
             arch: ARM
 
-    runs-on: windows-2019
+    runs-on: windows-2022
 
     steps:
       - name: Checkout
@@ -33,24 +33,14 @@ jobs:
           Install-WindowsFeature Server-Media-Foundation
 
       - name: Add msbuild to PATH
-        uses: microsoft/setup-msbuild@v1.0.2
-
-#      - name: Vcpkg
-#        shell: powershell
-#        if: ${{ matrix.platform == 'win' }}
-#        run: |
-#          vcpkg version
-#          vcpkg install tesseract:${{matrix.arch}}-windows-static
-#          vcpkg integrate install
-#          vcpkg list
+        uses: microsoft/setup-msbuild@v1.1
 
       - name: Setup vcpkg
-        uses: lukka/run-vcpkg@v6
+        uses: lukka/run-vcpkg@v10.0
         if: ${{ matrix.platform == 'win' }}
         with:
-          setupOnly: true
-          #vcpkgGitCommitId: ec6fe06e8da05a8157dc8581fa96b36b571c1bd5 # tag:2020.11-1
-          vcpkgGitCommitId: 9231937a9a2b57f4bda7a724af4f3743ace81cc0
+          #vcpkgGitCommitId: 9231937a9a2b57f4bda7a724af4f3743ace81cc0 
+          vcpkgGitCommitId: 9502b2044d7fbe7a885f824f58e0b672e8b74886 # https://github.com/shimat/vcpkg/commit/9502b2044d7fbe7a885f824f58e0b672e8b74886
           vcpkgGitURL: https://github.com/shimat/vcpkg.git
 
       - name: Vcpkg
@@ -58,7 +48,6 @@ jobs:
         if: ${{ matrix.platform == 'win' }}
         run: |
           echo ${env:VCPKG_ROOT}
-          ls ${env:VCPKG_ROOT}
           & ${env:VCPKG_ROOT}\vcpkg install tesseract:${{matrix.arch}}-windows-static
           & ${env:VCPKG_ROOT}\vcpkg integrate install
           & ${env:VCPKG_ROOT}\vcpkg list
@@ -67,7 +56,7 @@ jobs:
           ls ${env:VCPKG_ROOT}\installed\${{matrix.arch}}-windows-static\include
           ls ${env:VCPKG_ROOT}\installed\${{matrix.arch}}-windows-static\lib
 
-      - name: Build
+      - name: Build OpenCV
         shell: powershell
         run: |
           if ("${{matrix.platform}}" -eq 'win'){
@@ -79,7 +68,8 @@ jobs:
             BuildForUWP ${{matrix.arch}} "${env:VCPKG_ROOT}" $TRUE
           }
 
-      - id: version
+      - name: Set Version Variable
+        id: version
         shell: powershell
         run: |
           $v = ${env:OPENCV_VERSION}.Replace(".", "")
