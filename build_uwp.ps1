@@ -17,7 +17,7 @@ function BuildForUWP($platform, $vcpkgPath, $runMsbuild) {
     cmake -G "Visual Studio 17 2022" `
         -A $msbuildPlatform `
         -D CMAKE_SYSTEM_NAME=WindowsStore `
-        -D CMAKE_SYSTEM_VERSION="10.0.20348.0" `
+        -D CMAKE_SYSTEM_VERSION=10 `
         -D CMAKE_BUILD_TYPE=Release `
         -D CMAKE_INSTALL_PREFIX=install `
         -D INSTALL_C_EXAMPLES=ON `
@@ -44,6 +44,12 @@ function BuildForUWP($platform, $vcpkgPath, $runMsbuild) {
         -D WITH_QT=OFF `
         -D WITH_FREETYPE=OFF `
         -D WITH_TESSERACT=ON `
+        -D BUILD_JPEG=OFF `
+        -D BUILD_OPENJPEG=ON `
+        -D ENABLE_LIBJPEG_TURBO_SIMD=OFF `
+        -D WITH_JPEG=OFF `
+        -D WITH_OPENJPEG=ON `
+        -D old-jpeg=ON `
         -D Tesseract_INCLUDE_DIR="${vcpkgPath}/installed/${platform}-windows-static/include/tesseract" `
         -D Tesseract_LIBRARY="${vcpkgPath}/installed/${platform}-windows-static/lib/tesseract41.lib" `
         -D Lept_LIBRARY="${vcpkgPath}/installed/${platform}-windows-static/lib/leptonica-1.81.0.lib" `
