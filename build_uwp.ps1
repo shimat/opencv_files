@@ -17,7 +17,7 @@ function BuildForUWP($platform, $vcpkgPath, $runMsbuild) {
     cmake -G "Visual Studio 17 2022" `
         -A $msbuildPlatform `
         -D CMAKE_SYSTEM_NAME=WindowsStore `
-        -D CMAKE_SYSTEM_VERSION=10.0 `
+        -D CMAKE_SYSTEM_VERSION="10.0.20348.0" `
         -D CMAKE_BUILD_TYPE=Release `
         -D CMAKE_INSTALL_PREFIX=install `
         -D INSTALL_C_EXAMPLES=ON `
