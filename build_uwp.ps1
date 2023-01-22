@@ -44,6 +44,12 @@ function BuildForUWP($platform, $vcpkgPath, $runMsbuild) {
         -D WITH_QT=OFF `
         -D WITH_FREETYPE=OFF `
         -D WITH_TESSERACT=ON `
+        -D BUILD_JPEG=OFF `
+        -D BUILD_OPENJPEG=ON `
+        -D ENABLE_LIBJPEG_TURBO_SIMD=OFF `
+        -D WITH_JPEG=OFF `
+        -D WITH_OPENJPEG=ON `
+        -D old-jpeg=ON `
         -D Tesseract_INCLUDE_DIR="${vcpkgPath}/installed/${platform}-windows-static/include/tesseract" `
         -D Tesseract_LIBRARY="${vcpkgPath}/installed/${platform}-windows-static/lib/tesseract41.lib" `
         -D Lept_LIBRARY="${vcpkgPath}/installed/${platform}-windows-static/lib/leptonica-1.81.0.lib" `
