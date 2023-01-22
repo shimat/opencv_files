@@ -8,7 +8,7 @@ OpenCV Windows binaries for [opencvsharp](https://github.com/shimat/opencvsharp)
 - [CMake](https://cmake.org/)
 - [vcpkg](https://github.com/shimat/vcpkg) (forked by shimat)
   - For Tesseract dependency
-- [Visual Studio 2019](https://visualstudio.microsoft.com/ja/vs/) (msbuild)
+- [Visual Studio 2022](https://visualstudio.microsoft.com/ja/vs/) (msbuild)
   - VC++ features are necessary
   
 Please add paths of your cmake and vcpkg executables to the `PATH` environment variable.
