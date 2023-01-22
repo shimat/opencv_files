@@ -45,4 +45,4 @@ You can change the target platform and the vcpkg path by editing the .ps1 file.
 ## Release Packages
 https://github.com/shimat/opencv_files/releases
 
-The release packages are built by the [appveyor script](https://github.com/shimat/opencv_files/blob/master/appveyor.yml).
+The release packages are built by the GitHub Actions workflow.
