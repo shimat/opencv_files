@@ -5,7 +5,7 @@ on:
     types: [synchronize, opened]
 
 env:
-  OPENCV_VERSION: 4.7.0
+  OPENCV_VERSION: 4.8.0
 
 jobs:
   build:
@@ -39,9 +39,7 @@ jobs:
         uses: lukka/run-vcpkg@v11.1
         if: ${{ matrix.platform == 'win' }}
         with:
-          # https://github.com/shimat/vcpkg/commit/faed44dfa013088fe1910908a8a65887622f412f
-          #vcpkgGitCommitId: 9502b2044d7fbe7a885f824f58e0b672e8b74886 
-          vcpkgGitCommitId: faed44dfa013088fe1910908a8a65887622f412f
+          vcpkgGitCommitId: "64adda19c86e89526b5e27703a193c14477cce07"
           vcpkgGitURL: https://github.com/shimat/vcpkg.git
 
       - name: Vcpkg
