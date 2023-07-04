@@ -13,6 +13,13 @@ function BuildForUWP($platform, $vcpkgPath, $runMsbuild) {
     else {
         $msbuildPlatform = $platform # x64/ARM/ARM64
     }
+    
+    if ($platform -eq "ARM") {
+        $withOpenJPEG = "OFF"
+    }
+    else {
+        $withOpenJPEG = "ON"
+    }
 
     cmake -G "Visual Studio 17 2022" `
         -A $msbuildPlatform `
@@ -48,7 +55,7 @@ function BuildForUWP($platform, $vcpkgPath, $runMsbuild) {
         -D BUILD_OPENJPEG=ON `
         -D ENABLE_LIBJPEG_TURBO_SIMD=OFF `
         -D WITH_JPEG=OFF `
-        -D WITH_OPENJPEG=ON `
+        -D WITH_OPENJPEG=$withOpenJPEG `
         -D old-jpeg=ON `
         -D Tesseract_INCLUDE_DIR="${vcpkgPath}/installed/${platform}-windows-static/include/tesseract" `
         -D Tesseract_LIBRARY="${vcpkgPath}/installed/${platform}-windows-static/lib/tesseract41.lib" `
