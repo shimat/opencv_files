@@ -5,14 +5,15 @@ on:
     types: [synchronize, opened]
 
 env:
-  OPENCV_VERSION: 4.8.0
+  OPENCV_VERSION: 4.9.0
 
 jobs:
   build:
 
     strategy:
       matrix:
-        platform: ["win", "uwp"]
+        platform: ["win"]
+        #platform: ["win", "uwp"]
         arch: ["x86", "x64", "ARM"]
         exclude:
           - platform: win
@@ -22,7 +23,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           fetch-depth: 1
           submodules: recursive
@@ -33,10 +34,10 @@ jobs:
           Install-WindowsFeature Server-Media-Foundation
 
       - name: Add msbuild to PATH
-        uses: microsoft/setup-msbuild@v1.1
+        uses: microsoft/setup-msbuild@v1.3.1
 
       - name: Setup vcpkg
-        uses: lukka/run-vcpkg@v11.1
+        uses: lukka/run-vcpkg@v11.4
         if: ${{ matrix.platform == 'win' }}
         with:
           vcpkgGitCommitId: "64adda19c86e89526b5e27703a193c14477cce07"
