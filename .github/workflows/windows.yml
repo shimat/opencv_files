@@ -5,7 +5,7 @@ on:
     types: [synchronize, opened]
 
 env:
-  OPENCV_VERSION: 4.9.0
+  OPENCV_VERSION: 4.10.0
 
 jobs:
   build:
@@ -34,10 +34,10 @@ jobs:
           Install-WindowsFeature Server-Media-Foundation
 
       - name: Add msbuild to PATH
-        uses: microsoft/setup-msbuild@v1.3.1
+        uses: microsoft/setup-msbuild@v2
 
       - name: Setup vcpkg
-        uses: lukka/run-vcpkg@v11.4
+        uses: lukka/run-vcpkg@v11.5
         if: ${{ matrix.platform == 'win' }}
         with:
           vcpkgGitCommitId: "64adda19c86e89526b5e27703a193c14477cce07"
@@ -76,7 +76,7 @@ jobs:
           echo "::set-output name=OPENCV_VERSION_MOD::${v}"
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v4
         with:
           name: opencv${{steps.version.outputs.OPENCV_VERSION_MOD}}_${{matrix.platform}}_${{matrix.arch}}
           path: build_${{matrix.platform}}_${{matrix.arch}}/install
