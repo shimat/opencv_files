@@ -10,10 +10,17 @@ function BuildForWindows($platform, $vcpkgPath, $runMsbuild) {
     if ($platform -eq "x64") {
         $msbuildPlatform = "x64"
         $msmfFlag = "ON"
+        $caroteneFlag = "ON"
+    }
+    else if $platform -eq "arm64") {
+        $msbuildPlatform = "ARM64"
+        $msmfFlag = "ON"
+        $caroteneFlag = "OFF"
     }
     else {
         $msbuildPlatform = "Win32"
         $msmfFlag = "OFF" # opencv_videoio430.lib(cap_msmf.obj) : error LNK2001: unresolved external symbol _MFVideoFormat_H263 
+        $caroteneFlag = "ON"
     }
 
     cmake -G "Visual Studio 17 2022" `
@@ -46,6 +53,7 @@ function BuildForWindows($platform, $vcpkgPath, $runMsbuild) {
         -D WITH_QT=OFF `
         -D WITH_FREETYPE=OFF `
         -D WITH_TESSERACT=ON `
+        -D WITH_CAROTENE=${caroteneFlag} `
         -D Tesseract_INCLUDE_DIR="${vcpkgPath}/installed/${platform}-windows-static/include" `
         -D Tesseract_LIBRARY="${vcpkgPath}/installed/${platform}-windows-static/lib/tesseract41.lib" `
         -D Lept_LIBRARY="${vcpkgPath}/installed/${platform}-windows-static/lib/leptonica-1.81.0.lib" `
@@ -75,6 +83,7 @@ If ((Resolve-Path -Path $MyInvocation.InvocationName).ProviderPath -eq $MyInvoca
     $vcpkgPath = "C:\Projects\vcpkg"
     $platform = "x64"
     #$platform = "x86"
+    #$platform = "arm64"
 
     Invoke-Expression "${vcpkgPath}\vcpkg.exe install tesseract:${platform}-windows-static" -ErrorAction Stop
     #Invoke-Expression "${vcpkgPath}\vcpkg.exe integrate install" -ErrorAction Stop
