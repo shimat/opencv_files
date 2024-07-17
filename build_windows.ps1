@@ -12,7 +12,7 @@ function BuildForWindows($platform, $vcpkgPath, $runMsbuild) {
         $msmfFlag = "ON"
         $caroteneFlag = "ON"
     }
-    else if $platform -eq "arm64") {
+    elseif ($platform -eq "arm64") {
         $msbuildPlatform = "ARM64"
         $msmfFlag = "ON"
         $caroteneFlag = "OFF"
