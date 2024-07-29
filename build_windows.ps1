@@ -79,6 +79,7 @@ function BuildForWindows($targetPlatform, $vcpkgPath, $runMsbuild, $hostPlatform
         -D WITH_QT=OFF `
         -D WITH_FREETYPE=OFF `
         -D WITH_TESSERACT=ON `
+        -D WITH_CAROTENE=${caroteneFlag} `
         -D Tesseract_INCLUDE_DIR="${vcpkgPath}/installed/${targetPlatform}-windows-static/include" `
         -D Tesseract_LIBRARY="${vcpkgPath}/installed/${targetPlatform}-windows-static/lib/tesseract41.lib" `
         -D Lept_LIBRARY="${vcpkgPath}/installed/${targetPlatform}-windows-static/lib/leptonica-1.81.0.lib" `
