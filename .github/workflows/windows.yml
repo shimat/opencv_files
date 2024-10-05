@@ -11,10 +11,11 @@ jobs:
   build:
 
     strategy:
+      fail-fast: false
       matrix:
         platform: ["win"]
         #platform: ["win", "uwp"]
-        arch: ["x86", "x64", "ARM"]
+        arch: ["x86", "x64", "ARM", "arm64"]
         exclude:
           - platform: win
             arch: ARM
@@ -35,6 +36,9 @@ jobs:
 
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v2
+
+      - name: Install NASM to support SIMD optimizations 
+        uses: ilammy/setup-nasm@v1
 
       - name: Setup vcpkg
         uses: lukka/run-vcpkg@v11.5
@@ -59,6 +63,7 @@ jobs:
       - name: Build OpenCV
         shell: powershell
         run: |
+          Set-PSDebug -Trace 1
           if ("${{matrix.platform}}" -eq 'win'){
             . ".\build_windows.ps1"
             BuildForWindows ${{matrix.arch}} "${env:VCPKG_ROOT}" $TRUE
