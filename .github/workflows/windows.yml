@@ -49,6 +49,7 @@ jobs:
         run: |
           echo ${env:VCPKG_ROOT}
           & ${env:VCPKG_ROOT}\vcpkg install tesseract:${{matrix.arch}}-windows-static
+          & ${env:VCPKG_ROOT}\vcpkg install libavif:${{matrix.arch}}-windows-static
           & ${env:VCPKG_ROOT}\vcpkg integrate install
           & ${env:VCPKG_ROOT}\vcpkg list
           ls ${env:VCPKG_ROOT}\installed

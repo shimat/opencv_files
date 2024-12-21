@@ -42,12 +42,15 @@ function BuildForWindows($platform, $vcpkgPath, $runMsbuild) {
         -D BUILD_opencv_ts=OFF `
         -D BUILD_opencv_world=OFF `
         -D WITH_MSMF=${msmfFlag} `
+        -D WITH_AVIF=ON `
         -D WITH_MSMF_DXVA=${msmfFlag} `
         -D WITH_QT=OFF `
         -D WITH_FREETYPE=OFF `
         -D WITH_TESSERACT=ON `
         -D Tesseract_INCLUDE_DIR="${vcpkgPath}/installed/${platform}-windows-static/include" `
         -D Tesseract_LIBRARY="${vcpkgPath}/installed/${platform}-windows-static/lib/tesseract41.lib" `
+        -D AVIF_INCLUDE_DIR="${vcpkgPath}/installed/${platform}-windows-static/include" `
+        -D AVIF_LIBRARY="${vcpkgPath}/installed/${platform}-windows-static/lib/avif.lib" `
         -D Lept_LIBRARY="${vcpkgPath}/installed/${platform}-windows-static/lib/leptonica-1.81.0.lib" `
         -D ENABLE_CXX11=1 `
         -D OPENCV_ENABLE_NONFREE=ON `
@@ -77,7 +80,8 @@ If ((Resolve-Path -Path $MyInvocation.InvocationName).ProviderPath -eq $MyInvoca
     #$platform = "x86"
 
     Invoke-Expression "${vcpkgPath}\vcpkg.exe install tesseract:${platform}-windows-static" -ErrorAction Stop
+    Invoke-Expression "${vcpkgPath}\vcpkg.exe install libavif:${platform}-windows-static" -ErrorAction Stop
     #Invoke-Expression "${vcpkgPath}\vcpkg.exe integrate install" -ErrorAction Stop
 
-    BuildForWindows $platform $vcpkgPath $FALSE
+    BuildForWindows $platform $vcpkgPath $TRUE
 }
