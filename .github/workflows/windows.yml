@@ -15,10 +15,11 @@ jobs:
       matrix:
         platform: ["win"]
         #platform: ["win", "uwp"]
-        arch: ["x86", "x64", "ARM", "arm64"]
-        exclude:
-          - platform: win
-            arch: ARM
+        arch: ["x64"]
+        # arch: ["x86", "x64", "ARM", "arm64"]
+        # exclude:
+        #   - platform: win
+        #     arch: ARM
 
     runs-on: windows-2022
 
@@ -37,7 +38,7 @@ jobs:
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v2
 
-      - name: Install NASM to support SIMD optimizations 
+      - name: Install NASM to support SIMD optimizations
         uses: ilammy/setup-nasm@v1
 
       - name: Setup vcpkg
