@@ -20,6 +20,8 @@ jobs:
         exclude:
           - platform: win
             arch: ARM
+          - platform: win
+            arch: arm64
 
     runs-on: windows-2022
 
