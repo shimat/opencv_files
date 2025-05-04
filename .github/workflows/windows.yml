@@ -3,9 +3,10 @@ name: Windows Server 2022
 on:
   pull_request:
     types: [synchronize, opened]
+  workflow_dispatch:
 
 env:
-  OPENCV_VERSION: 4.10.0
+  OPENCV_VERSION: 4.11.0
 
 jobs:
   build:
@@ -19,6 +20,8 @@ jobs:
         exclude:
           - platform: win
             arch: ARM
+          - platform: win
+            arch: arm64
 
     runs-on: windows-2022
 
@@ -44,7 +47,7 @@ jobs:
         uses: lukka/run-vcpkg@v11.5
         if: ${{ matrix.platform == 'win' }}
         with:
-          vcpkgGitCommitId: "64adda19c86e89526b5e27703a193c14477cce07"
+          vcpkgGitCommitId: "41c447cc210dc39aa85d4a5f58b4a1b9e573b3dc"
           vcpkgGitURL: https://github.com/shimat/vcpkg.git
 
       - name: Vcpkg
