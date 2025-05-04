@@ -35,6 +35,7 @@ function BuildForUWP($platform, $vcpkgPath, $runMsbuild) {
         -D BUILD_PERF_TESTS=OFF `
         -D BUILD_JAVA=OFF `
         -D BUILD_WITH_DEBUG_INFO=OFF `
+        -D BUILD_opencv_dnn=OFF `
         -D BUILD_opencv_apps=OFF `
         -D BUILD_opencv_datasets=OFF `
         -D BUILD_opencv_gapi=OFF `
