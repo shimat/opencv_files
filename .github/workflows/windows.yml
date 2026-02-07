@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 env:
-  OPENCV_VERSION: 4.11.0
+  OPENCV_VERSION: 4.13.0
 
 jobs:
   build:
@@ -23,11 +23,11 @@ jobs:
           - platform: win
             arch: arm64
 
-    runs-on: windows-2022
+    runs-on: windows-2025
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 1
           submodules: recursive
