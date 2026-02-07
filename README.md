@@ -2,7 +2,7 @@
 
 OpenCV Windows binaries for [opencvsharp](https://github.com/shimat/opencvsharp)
 
-![Windows Server 2022](https://github.com/shimat/opencv_files/workflows/Windows%20Server%202022/badge.svg)
+![Windows Server 2022](https://github.com/shimat/opencv_files/workflows/Windows%20Server%202025/badge.svg)
 
 ## Requirements
 - [CMake](https://cmake.org/)
