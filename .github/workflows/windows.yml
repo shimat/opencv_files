@@ -1,4 +1,4 @@
-name: Windows Server 2022
+name: Windows Server 2025
 
 on:
   pull_request:
